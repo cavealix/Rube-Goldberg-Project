@@ -30,7 +30,7 @@ public class ControllerInputManager : MonoBehaviour {
 	void Update () {
 		device = SteamVR_Controller.Input((int)trackedObject.index);
 
-		//on press
+		//deploy laser on press
 		if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
 		{
 			laser.gameObject.SetActive(true);
@@ -64,7 +64,7 @@ public class ControllerInputManager : MonoBehaviour {
 			}
 		}	
 		
-		//on press up
+		//teleport on press up
 		if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
 		{
 			laser.gameObject.SetActive(false);
@@ -95,8 +95,9 @@ public class ControllerInputManager : MonoBehaviour {
 		coli.transform.SetParent(gameObject.transform);
 		coli.GetComponent<Rigidbody>().isKinematic = true;
 		device.TriggerHapticPulse(2000);
-		Debug.Log("you are touching down on the trigger on an object");
+		//Debug.Log("you are touching down on the trigger on an object");
 	}
+	//Throw objects with trigger release
 	void ThrowObject(Collider coli)
 	{
 		coli.transform.SetParent(null);
@@ -104,6 +105,6 @@ public class ControllerInputManager : MonoBehaviour {
 		rigidBody.isKinematic = false;
 		rigidBody.velocity = device.velocity * throwForce;
 		rigidBody.angularVelocity = device.angularVelocity;
-		Debug.Log("You have released the trigger");
+		//Debug.Log("You have released the trigger");
 	}
 }
