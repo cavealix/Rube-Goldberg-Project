@@ -10,6 +10,10 @@ public class Respawn : MonoBehaviour {
 	void Start () {
 		respawn = item.transform.position;
 	}
+	
+	// Update is called once per frame
+	void Update () {
+	}
 
 	void OnCollisionEnter (Collision col)
     {
@@ -19,8 +23,4 @@ public class Respawn : MonoBehaviour {
             item.transform.position = respawn;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
 }

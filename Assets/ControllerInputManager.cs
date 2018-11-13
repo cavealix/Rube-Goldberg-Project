@@ -6,6 +6,9 @@ public class ControllerInputManager : MonoBehaviour {
 	public SteamVR_TrackedObject trackedObject;
     public SteamVR_Controller.Device device;
 
+    //Interaction Variables
+    public float throwForce = 1.5f;
+
     // Teleporter
     private LineRenderer laser; //laser pointer
     public GameObject teleportAimerObject; //where to teleport
@@ -69,5 +72,38 @@ public class ControllerInputManager : MonoBehaviour {
 			//move player
 			player.transform.position = teleportLocation;
 		}	
+	}
+
+	//Hold Objects
+	void OnTriggerStay(Collider col)
+	{
+		if(col.gameObject.CompareTag("Throwable"))
+		{
+			if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+			{
+				ThrowObject(col);
+			}
+			else if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+			{
+				GrabObject(col);
+			}
+		}
+	}
+	//Grab objects with Trigger
+	void GrabObject(Collider coli)
+	{
+		coli.transform.SetParent(gameObject.transform);
+		coli.GetComponent<Rigidbody>().isKinematic = true;
+		device.TriggerHapticPulse(2000);
+		Debug.Log("you are touching down on the trigger on an object");
+	}
+	void ThrowObject(Collider coli)
+	{
+		coli.transform.SetParent(null);
+		Rigidbody rigidBody = coli.GetComponent<Rigidbody>();
+		rigidBody.isKinematic = false;
+		rigidBody.velocity = device.velocity * throwForce;
+		rigidBody.angularVelocity = device.angularVelocity;
+		Debug.Log("You have released the trigger");
 	}
 }
