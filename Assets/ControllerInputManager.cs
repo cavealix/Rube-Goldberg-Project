@@ -30,27 +30,29 @@ public class ControllerInputManager : MonoBehaviour {
 	void Update () {
 		device = SteamVR_Controller.Input((int)trackedObject.index);
 
-		//deploy laser on press
-		if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
-		{
-			laser.gameObject.SetActive(true);
-			teleportAimerObject.SetActive(true);
-
-			//on ray hit
-			laser.SetPosition(0, gameObject.transform.position);
-			//create variable to store ray info
-			RaycastHit hit;
-			if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
+		//if (device.gameObject.name == "Controller (left)")
+		//{
+			//deploy laser on press
+			if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
 			{
+				laser.gameObject.SetActive(true);
+				teleportAimerObject.SetActive(true);
+
+				//on ray hit
+				laser.SetPosition(0, gameObject.transform.position);
+				//create variable to store ray info
+				RaycastHit hit;
+				if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
+				{
 				//true on collision within 15
 				teleportLocation = hit.point;
 				laser.SetPosition(1, teleportLocation);
 				//aimer position
 				teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
-			}
-			//on no hit, move forward 15
-			else
-			{
+				}
+				//on no hit, move forward 15
+				else
+				{
 				teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, transform.forward.y * 15 + transform.position.y, transform.forward.z * 15 + transform.position.z);
 				RaycastHit groundRay;
 				if(Physics.Raycast(teleportLocation, -Vector3.up, out groundRay, 17, laserMask))
@@ -61,17 +63,19 @@ public class ControllerInputManager : MonoBehaviour {
 				laser.SetPosition(1, transform.forward * 15 + transform.position);
 				//aimer 
 				teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudge, 0);
-			}
-		}	
+				}
+			}	
 		
-		//teleport on press up
-		if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
-		{
-			laser.gameObject.SetActive(false);
-			teleportAimerObject.SetActive(false);
-			//move player
-			player.transform.position = teleportLocation;
-		}	
+			//teleport on press up
+			if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
+			{
+				laser.gameObject.SetActive(false);
+				teleportAimerObject.SetActive(false);
+				//move player
+				player.transform.position = teleportLocation;
+			}
+		//}
+	
 	}
 
 	//Hold Objects
@@ -81,6 +85,11 @@ public class ControllerInputManager : MonoBehaviour {
 		{
 			if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
 			{
+				//if object is ball, instantiate gravity
+				if(col.gameObject.name == "Ball")
+				{
+					col.gameObject.GetComponent<Rigidbody>().useGravity = true;
+				}
 				ThrowObject(col);
 			}
 			else if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))

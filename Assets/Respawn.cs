@@ -21,8 +21,9 @@ public class Respawn : MonoBehaviour {
 		//if collision with floor, respawn at original location
         if(col.gameObject.CompareTag("Ground"))
         {
-        	//respawn to original position
+        	//respawn to original position and deactivate gravity
             item.transform.position = respawn;
+            item.GetComponent<Rigidbody>().useGravity = false;
             //set velocity and angular velocity (spin) to 0
             item.GetComponent<Rigidbody>().velocity = new Vector3 (0, 0, 0);
             item.GetComponent<Rigidbody>().angularVelocity = new Vector3 (0, 0, 0);
