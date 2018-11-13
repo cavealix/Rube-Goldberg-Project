@@ -45,8 +45,4 @@ public class ObjectMenuManager : MonoBehaviour {
 			objectList[currentObject].transform.rotation);
 	}
 	
-	// Update is called once per frame
-	void Update () 
-	{
-	}
 }
