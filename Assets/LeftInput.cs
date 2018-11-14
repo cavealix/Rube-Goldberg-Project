@@ -30,7 +30,7 @@ public class LeftInput : MonoBehaviour {
 	// Teleport and Swipe Logic
 	void Update () {
 		device = SteamVR_Controller.Input((int)trackedObject.index);
-		Debug.Log(trackedObject.index);
+		//Debug.Log(trackedObject.index);
 
 		//Teleportation Logic (need to include logic to only allow for left controller)
 		//{
@@ -102,13 +102,15 @@ public class LeftInput : MonoBehaviour {
 			}
 		}
 
-		//Interact with "Structure"
-		if(col.gameObject.CompareTag("Structure"))
+		//Interact with "Structure" or "Trampoline"
+		if(col.gameObject.CompareTag("Structure") || col.gameObject.CompareTag("Trampoline"))
 		{
+			//Grab and Move
 			if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
 			{
 				GrabObject(col);
 			}
+			//Release
 			else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
 			{
 				ReleaseObject(col);

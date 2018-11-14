@@ -24,7 +24,7 @@ public class ControllerInputManager : MonoBehaviour {
 	// Teleport and Swipe Logic
 	void Update () {
 		device = SteamVR_Controller.Input((int)trackedObject.index);
-		Debug.Log(trackedObject.index);
+		//Debug.Log(trackedObject.index);
 
 		//detect touch
 		if(device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
