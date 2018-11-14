@@ -84,6 +84,7 @@ public class LeftInput : MonoBehaviour {
 	//Hold Objects
 	void OnTriggerStay(Collider col)
 	{
+		//Interact with "Throwables"
 		if(col.gameObject.CompareTag("Throwable"))
 		{
 			if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
@@ -100,6 +101,19 @@ public class LeftInput : MonoBehaviour {
 				GrabObject(col);
 			}
 		}
+
+		//Interact with "Structure"
+		if(col.gameObject.CompareTag("Structure"))
+		{
+			if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+			{
+				GrabObject(col);
+			}
+			else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+			{
+				ReleaseObject(col);
+			}
+		}
 	}
 	//Grab objects with Trigger
 	void GrabObject(Collider coli)
@@ -109,7 +123,7 @@ public class LeftInput : MonoBehaviour {
 		device.TriggerHapticPulse(2000);
 		//Debug.Log("you are touching down on the trigger on an object");
 	}
-	//Throw objects with trigger release
+	//Throw "Throwables" with trigger release
 	void ThrowObject(Collider coli)
 	{
 		coli.transform.SetParent(null);
@@ -117,6 +131,16 @@ public class LeftInput : MonoBehaviour {
 		rigidBody.isKinematic = false;
 		rigidBody.velocity = device.velocity * throwForce;
 		rigidBody.angularVelocity = device.angularVelocity;
+		//Debug.Log("You have released the trigger");
+	}
+	//Release "structures" with trigger release
+	void ReleaseObject(Collider coli)
+	{
+		coli.transform.SetParent(null);
+		Rigidbody rigidBody = coli.GetComponent<Rigidbody>();
+		rigidBody.isKinematic = true;
+		rigidBody.velocity = new Vector3(0, 0, 0);
+		rigidBody.angularVelocity = new Vector3(0, 0, 0);
 		//Debug.Log("You have released the trigger");
 	}
 }

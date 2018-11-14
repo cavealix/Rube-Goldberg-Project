@@ -43,7 +43,7 @@ public class ControllerInputManager : MonoBehaviour {
 			}
 		}
 
-		if(device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+		if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))//Grip
 		{
 			objectMenuManager.SpawnCurrentObject();
 		}
@@ -51,43 +51,4 @@ public class ControllerInputManager : MonoBehaviour {
 
 	}
 
-
-	//Hold Objects
-	void OnTriggerStay(Collider col)
-	{
-		if(col.gameObject.CompareTag("Throwable"))
-		{
-			if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
-			{
-				//if object is ball, instantiate gravity
-				if(col.gameObject.name == "Ball")
-				{
-					col.gameObject.GetComponent<Rigidbody>().useGravity = true;
-				}
-				ThrowObject(col);
-			}
-			else if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
-			{
-				GrabObject(col);
-			}
-		}
-	}
-	//Grab objects with Trigger
-	void GrabObject(Collider coli)
-	{
-		coli.transform.SetParent(gameObject.transform);
-		coli.GetComponent<Rigidbody>().isKinematic = true;
-		device.TriggerHapticPulse(2000);
-		//Debug.Log("you are touching down on the trigger on an object");
-	}
-	//Throw objects with trigger release
-	void ThrowObject(Collider coli)
-	{
-		coli.transform.SetParent(null);
-		Rigidbody rigidBody = coli.GetComponent<Rigidbody>();
-		rigidBody.isKinematic = false;
-		rigidBody.velocity = device.velocity * throwForce;
-		rigidBody.angularVelocity = device.angularVelocity;
-		//Debug.Log("You have released the trigger");
-	}
 }
