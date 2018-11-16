@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour {
 	public GameObject ball; //item to get location of for respawn
 	private Vector3 reflect;
 
+	//Wind and Trampoline variables
 	public float windForce = 1f;
 	public bool inWind = false;
 	private GameObject WindArea;
@@ -17,8 +18,14 @@ public class Ball : MonoBehaviour {
 	public GameObject StartZone;
 	public bool inStartZone = false;
 
+	//GameLogic
 	public GameObject GameLogic;
 
+	//Ball Materials
+	public Material m_Active;
+	public Material m_Inactive;
+
+	//Collected Stars
 	public List<GameObject> stars;
 
 	// Use this for initialization
@@ -29,13 +36,17 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		checkStarZone();
+		inStartZone = checkStarZone();
+		if (inStartZone)
+			ball.GetComponent<Renderer>().material = m_Active;
+		else
+			gameObject.GetComponent<Renderer>().material = m_Inactive;
 	}
 
 	//Check if ball in start zone to prevent cheating
-	void checkStarZone()
+	bool checkStarZone()
 	{
-		inStartZone = StartZone.GetComponent<Collider>().bounds.Contains(gameObject.transform.position);
+		return StartZone.GetComponent<Collider>().bounds.Contains(gameObject.transform.position);
 	}
 
 	//Hit Floor, Respawn ball and stars
