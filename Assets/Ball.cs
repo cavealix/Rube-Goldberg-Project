@@ -13,6 +13,12 @@ public class Ball : MonoBehaviour {
 	private GameObject WindArea;
 	private GameObject trampoline;
 
+	//Start Zone 
+	public GameObject StartZone;
+	public bool inStartZone = false;
+
+	public GameObject GameLogic;
+
 	public List<GameObject> stars;
 
 	// Use this for initialization
@@ -23,7 +29,13 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		checkStarZone();
+	}
 
+	//Check if ball in start zone to prevent cheating
+	void checkStarZone()
+	{
+		inStartZone = StartZone.GetComponent<Collider>().bounds.Contains(gameObject.transform.position);
 	}
 
 	//Hit Floor, Respawn ball and stars
@@ -62,9 +74,24 @@ public class Ball : MonoBehaviour {
     //Trigger effects of hitting various objects
     void OnTriggerEnter(Collider col)
     {
+
+    	//Hit Goal
+    	if (col.gameObject.tag == "Goal")
+    	{
+    		//Collect All Stars?
+    		if(stars.Count == 3)
+    		Debug.Log("You Win!");
+    		//SteamVR_LoadLevel.Begin("Level1");
+    		else
+    		Debug.Log("Try Again");
+
+    	}
+
     	//Collect Star
     	if (col.gameObject.tag == "Star")
     	{
+
+    		//GameLogic.CollectStar(col.gameObject);
     		stars.Add(col.gameObject);
     		col.gameObject.GetComponent<Star>().Collect();
     	}

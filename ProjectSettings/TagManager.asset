@@ -11,6 +11,7 @@ TagManager:
   - ForceField
   - WindArea
   - Star
+  - Goal
   layers:
   - Default
   - TransparentFX
