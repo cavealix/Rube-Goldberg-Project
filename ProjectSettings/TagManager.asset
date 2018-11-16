@@ -9,6 +9,7 @@ TagManager:
   - Structure
   - Trampoline
   - ForceField
+  - WindArea
   layers:
   - Default
   - TransparentFX

@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour {
 	public float windForce = 1f;
 	public bool inWind = false;
 	private GameObject WindArea;
+	private GameObject trampoline;
 
 	// Use this for initialization
 	void Start () {
@@ -36,14 +37,7 @@ public class Ball : MonoBehaviour {
             Debug.Log("The ball hit the floor and respawned");
         }
 
-        //Bounce
-        if (col.gameObject.CompareTag("Trampoline"))
-        {
-        	Debug.Log ("Bounce!");
-           //col.gameObject.GetComponent<Rigidbody>().AddForce (0, forceApplied, 0);
-        	reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, col.contacts[0].normal);
-        	ball.GetComponent<Rigidbody>().velocity = 2 * reflect;
-        }
+        
      
     }
 
@@ -59,22 +53,33 @@ public class Ball : MonoBehaviour {
     {
     	if(inWind)
     	{
-	        ball.GetComponent<Rigidbody>().AddForce(WindArea.transform.up * windForce);
+	        ball.GetComponent<Rigidbody>().AddForce(WindArea.transform.up * WindArea.GetComponent<WindArea>().strength);
     	}
     }
 
     void OnTriggerEnter(Collider col)
     {
-    	if(col.gameObject.tag == "ForceField")
+    	if(col.gameObject.tag == "WindArea")
     	{
     		inWind = true;
     		WindArea = col.gameObject;
     	}
+
+    	//Bounce
+        if (col.gameObject.CompareTag("Trampoline"))
+        {
+        	Debug.Log ("Bounce!");
+        	trampoline = col.gameObject;
+           //col.gameObject.GetComponent<Rigidbody>().AddForce (0, forceApplied, 0);
+        	//reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, col.contacts[0].normal);
+        	reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, Vector3.up);
+        	ball.GetComponent<Rigidbody>().velocity =  trampoline.GetComponent<Trampoline>().strength * reflect;
+        }
     }
 
     void OnTriggerExit(Collider col)
     {
-    	if(col.gameObject.tag == "ForceField")
+    	if(col.gameObject.tag == "WindArea")
     	{
     		inWind = false;
     	}

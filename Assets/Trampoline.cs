@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WindArea : MonoBehaviour {
+public class Trampoline : MonoBehaviour {
 
-	public float strength = 1f;
+	public float strength = 2f;
 }
