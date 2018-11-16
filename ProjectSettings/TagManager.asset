@@ -10,6 +10,7 @@ TagManager:
   - Trampoline
   - ForceField
   - WindArea
+  - Star
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class Ball : MonoBehaviour {
 	private GameObject WindArea;
 	private GameObject trampoline;
 
+	public List<GameObject> stars;
+
 	// Use this for initialization
 	void Start () {
 		respawn = ball.transform.position;
@@ -23,6 +26,7 @@ public class Ball : MonoBehaviour {
 
 	}
 
+	//Hit Floor, Respawn ball and stars
 	void OnCollisionEnter (Collision col)
     {
 		//if collision with floor, respawn at original location
@@ -35,20 +39,18 @@ public class Ball : MonoBehaviour {
             ball.GetComponent<Rigidbody>().velocity = new Vector3 (0, 0, 0);
             ball.GetComponent<Rigidbody>().angularVelocity = new Vector3 (0, 0, 0);
             Debug.Log("The ball hit the floor and respawned");
-        }
 
-        
-     
+            //Respawn Stars
+            foreach(GameObject star in stars)
+            {
+            	star.GetComponent<Star>().Respawn();
+            }
+            //reset star array
+            stars.Clear();
+        }
     }
 
-    //wind zone
-    /*void OnCollisionStay(Collision col)
-    {
-        Debug.Log ("Wind!");
-        //col.gameObject.GetComponent<Rigidbody>().AddForce (0, forceApplied, 0);
-        ball.GetComponent<Rigidbody>().AddForce(col.gameObject.transform.forward * windForce);
-    } */
-
+    //Apply Wind Force
     private void FixedUpdate()
     {
     	if(inWind)
@@ -57,8 +59,17 @@ public class Ball : MonoBehaviour {
     	}
     }
 
+    //Trigger effects of hitting various objects
     void OnTriggerEnter(Collider col)
     {
+    	//Collect Star
+    	if (col.gameObject.tag == "Star")
+    	{
+    		stars.Add(col.gameObject);
+    		col.gameObject.GetComponent<Star>().Collect();
+    	}
+
+    	//Enter Wind Area
     	if(col.gameObject.tag == "WindArea")
     	{
     		inWind = true;
