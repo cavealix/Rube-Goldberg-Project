@@ -47,6 +47,23 @@ public class GameLogic : MonoBehaviour {
 		//SteamVR_LoadLevel.Begin("Level_1");
         Scene scene = SceneManager.GetActiveScene();
         Debug.Log("Active scene is '" + scene.name + "'.");
+
+        switch(scene.name)
+        {
+        	case "Level_1":
+        		SceneManager.LoadScene("Level_2");
+        		break;
+        	case "Level_2":
+        		SceneManager.LoadScene("Level_3");
+        		break;
+        	case "Level_3":
+        		SceneManager.LoadScene("Level_4");
+        		break;
+        	case "Level_4":
+        		SceneManager.LoadScene("Level_1");
+        		break;
+        }
+
 	}
 
 	public void Reset()
