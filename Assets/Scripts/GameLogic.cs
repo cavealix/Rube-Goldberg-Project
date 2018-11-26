@@ -7,15 +7,21 @@ public class GameLogic : MonoBehaviour {
 	public GameObject ball;
 	public List<GameObject> stars;
 
+	//Start Zone 
+	public GameObject StartZone;
 
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update () {	
+	}
+
+	//Check if ball in start zone to prevent cheating
+	public bool checkStartZone()
+	{
+		return StartZone.GetComponent<Collider>().bounds.Contains(gameObject.transform.position);
 	}
 
 	//Ball hit a star
@@ -63,7 +69,6 @@ public class GameLogic : MonoBehaviour {
         		SceneManager.LoadScene("Level_1");
         		break;
         }
-
 	}
 
 	public void Reset()
@@ -75,6 +80,9 @@ public class GameLogic : MonoBehaviour {
         }
         //reset star array
         stars.Clear();
+
+    	//reset ball
+    	ball.GetComponent<Ball>().Respawn();
 	}
 
 	public bool isCheating()

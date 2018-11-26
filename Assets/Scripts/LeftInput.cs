@@ -6,6 +6,9 @@ public class LeftInput : MonoBehaviour {
 	public SteamVR_TrackedObject trackedObject;
     public SteamVR_Controller.Device device;
 
+    //GameLogic
+	public GameObject GameLogic;
+
     //Interaction Variables
     public float throwForce = 1.5f;
 
@@ -85,13 +88,14 @@ public class LeftInput : MonoBehaviour {
 	void OnTriggerStay(Collider col)
 	{
 		//Interact with "Throwables"
-		if(col.gameObject.CompareTag("Throwable"))
+		/*if(col.gameObject.CompareTag("Throwable"))
 		{
 			if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
 			{
 				//if object is ball, instantiate gravity
 				if(col.gameObject.name == "Ball")
 				{
+					//GameObject ball = col.gameObject;
 					col.gameObject.GetComponent<Rigidbody>().useGravity = true;
 				}
 				ThrowObject(col);
@@ -99,6 +103,27 @@ public class LeftInput : MonoBehaviour {
 			else if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
 			{
 				GrabObject(col);
+			}
+		}*/
+
+		//Interact with "Ball"
+		if(col.gameObject.CompareTag("Ball"))
+		{
+			//grab 
+			if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) )
+			{
+				//grab if inside startZone
+				if (GameLogic.GetComponent<GameLogic>().checkStartZone())
+					GrabObject(col);
+				//don't allow player to carry ball outside start zone, reset level
+				else
+					GameLogic.GetComponent<GameLogic>().Reset();
+			}
+			//release if outside startZone
+			else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+			{
+				col.gameObject.GetComponent<Rigidbody>().useGravity = true;
+				ThrowObject(col);
 			}
 		}
 

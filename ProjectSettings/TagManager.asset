@@ -12,6 +12,7 @@ TagManager:
   - WindArea
   - Star
   - Goal
+  - Ball
   layers:
   - Default
   - TransparentFX

@@ -37,7 +37,7 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		inStartZone = checkStarZone();
+		inStartZone = GameLogic.GetComponent<GameLogic>().checkStartZone();
 		if (inStartZone)
 			ball.GetComponent<Renderer>().material = m_Active;
 		else
@@ -45,10 +45,10 @@ public class Ball : MonoBehaviour {
 	}
 
 	//Check if ball in start zone to prevent cheating
-	bool checkStarZone()
+	/*bool checkStarZone()
 	{
 		return StartZone.GetComponent<Collider>().bounds.Contains(gameObject.transform.position);
-	}
+	}*/
 
 	//Hit Floor, Respawn ball and stars
 	void OnCollisionEnter (Collision col)
@@ -56,14 +56,19 @@ public class Ball : MonoBehaviour {
 		//if collision with floor, respawn at original location
         if(col.gameObject.CompareTag("Ground"))
         {
-        	//respawn to original position and deactivate gravity
-            ball.transform.position = respawn;
-            ball.GetComponent<Rigidbody>().useGravity = true;
-            //set velocity and angular velocity (spin) to 0
-            ball.GetComponent<Rigidbody>().velocity = new Vector3 (0, 0, 0);
-            ball.GetComponent<Rigidbody>().angularVelocity = new Vector3 (0, 0, 0);
-            //Debug.Log("The ball hit the floor and respawned");
+        	Respawn();
         }
+    }
+
+    public void Respawn()
+    {
+        //respawn to original position and deactivate gravity
+        ball.transform.position = respawn;
+        ball.GetComponent<Rigidbody>().useGravity = true;
+        //set velocity and angular velocity (spin) to 0
+        ball.GetComponent<Rigidbody>().velocity = new Vector3 (0, 0, 0);
+        ball.GetComponent<Rigidbody>().angularVelocity = new Vector3 (0, 0, 0);
+        //Debug.Log("The ball hit the floor and respawned");
     }
 
     //Apply Wind Force
