@@ -43,7 +43,8 @@ public class ControllerInputManager : MonoBehaviour {
 			}
 		}
 
-		if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))//Grip
+		//Grip
+		if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
 		{
 			objectMenuManager.SpawnCurrentObject();
 		}

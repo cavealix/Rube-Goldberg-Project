@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Ball : MonoBehaviour {
+public class BallScript : MonoBehaviour {
 	private Vector3 respawn; //location to respawn 
 	public GameObject ball; //item to get location of for respawn
 	private Vector3 reflect;
@@ -26,12 +27,12 @@ public class Ball : MonoBehaviour {
 	public Material m_Inactive;
 
 	//Collected Stars
-	public List<GameObject> stars;
+	//public List<GameObject> stars;
 
 	// Use this for initialization
 	void Start () {
 		respawn = ball.transform.position;
-		Debug.Log("Ball start position is " + respawn.ToString());
+		//Debug.Log("Ball start position is " + respawn.ToString());
 	}
 	
 	// Update is called once per frame
@@ -61,15 +62,7 @@ public class Ball : MonoBehaviour {
             //set velocity and angular velocity (spin) to 0
             ball.GetComponent<Rigidbody>().velocity = new Vector3 (0, 0, 0);
             ball.GetComponent<Rigidbody>().angularVelocity = new Vector3 (0, 0, 0);
-            Debug.Log("The ball hit the floor and respawned");
-
-            //Respawn Stars
-            foreach(GameObject star in stars)
-            {
-            	star.GetComponent<Star>().Respawn();
-            }
-            //reset star array
-            stars.Clear();
+            //Debug.Log("The ball hit the floor and respawned");
         }
     }
 
@@ -85,26 +78,16 @@ public class Ball : MonoBehaviour {
     //Trigger effects of hitting various objects
     void OnTriggerEnter(Collider col)
     {
-
     	//Hit Goal
     	if (col.gameObject.tag == "Goal")
     	{
-    		//Collect All Stars?
-    		if(stars.Count == 3)
-    		Debug.Log("You Win!");
-    		//SteamVR_LoadLevel.Begin("Level1");
-    		else
-    		Debug.Log("Try Again");
-
+    		GameLogic.GetComponent<GameLogic>().HitGoal();
     	}
 
     	//Collect Star
     	if (col.gameObject.tag == "Star")
     	{
-
-    		//GameLogic.CollectStar(col.gameObject);
-    		stars.Add(col.gameObject);
-    		col.gameObject.GetComponent<Star>().Collect();
+    		GameLogic.GetComponent<GameLogicScript>().CollectStar(col.gameObject);
     	}
 
     	//Enter Wind Area
@@ -117,9 +100,9 @@ public class Ball : MonoBehaviour {
     	//Bounce
         if (col.gameObject.CompareTag("Trampoline"))
         {
-        	Debug.Log ("Bounce!");
+        	//Debug.Log ("Bounce!");
         	trampoline = col.gameObject;
-           //col.gameObject.GetComponent<Rigidbody>().AddForce (0, forceApplied, 0);
+            //col.gameObject.GetComponent<Rigidbody>().AddForce (0, forceApplied, 0);
         	//reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, col.contacts[0].normal);
         	reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, Vector3.up);
         	ball.GetComponent<Rigidbody>().velocity =  trampoline.GetComponent<Trampoline>().strength * reflect;
