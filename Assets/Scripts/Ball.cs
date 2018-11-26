@@ -64,7 +64,7 @@ public class Ball : MonoBehaviour {
     {
         //respawn to original position and deactivate gravity
         ball.transform.position = respawn;
-        ball.GetComponent<Rigidbody>().useGravity = true;
+        ball.GetComponent<Rigidbody>().useGravity = false;
         //set velocity and angular velocity (spin) to 0
         ball.GetComponent<Rigidbody>().velocity = new Vector3 (0, 0, 0);
         ball.GetComponent<Rigidbody>().angularVelocity = new Vector3 (0, 0, 0);

@@ -2697,7 +2697,7 @@ TextMesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 577826193}
-  m_Text: "Teleport: Left Touchpad\nGrab: Left & Right Triggers\nCycle Objects: Right
+  m_Text: "Teleport: Left Touchpad\nGrab Objects: Left Triggers\nCycle Objects: Right
     Touchpad \nSpawn Objects: Right Trigger"
   m_OffsetZ: 0
   m_CharacterSize: 1
@@ -4593,7 +4593,7 @@ Rigidbody:
   m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -4625,7 +4625,7 @@ MonoBehaviour:
   windForce: 1
   inWind: 0
   StartZone: {fileID: 135694513}
-  inStartZone: 0
+  inStartZone: 1
   GameLogic: {fileID: 131605420}
   m_Active: {fileID: 2100000, guid: 156347396dbacc342bf96ace9fc0cf83, type: 2}
   m_Inactive: {fileID: 2100000, guid: eedc108c0e1bb694bb31ac3b4902d7fb, type: 2}
@@ -5552,7 +5552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1207447617
 Transform:
   m_ObjectHideFlags: 0
