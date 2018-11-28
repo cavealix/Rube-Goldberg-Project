@@ -40,18 +40,12 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		inStartZone = GameLogic.GetComponent<GameLogic>().checkStartZone();
-		if (inStartZone)
+		
+		if (GameLogic.GetComponent<GameLogic>().checkStartZone())
 			ball.GetComponent<Renderer>().material = m_Active;
 		else
-			gameObject.GetComponent<Renderer>().material = m_Inactive;
+			ball.GetComponent<Renderer>().material = m_Inactive;
 	}
-
-	//Check if ball in start zone to prevent cheating
-	/*bool checkStarZone()
-	{
-		return StartZone.GetComponent<Collider>().bounds.Contains(gameObject.transform.position);
-	}*/
 
 	//Hit Floor, Respawn ball and stars
 	void OnCollisionEnter (Collision col)
@@ -86,14 +80,14 @@ public class Ball : MonoBehaviour {
     //Trigger effects of hitting various objects
     void OnTriggerEnter(Collider col)
     {
-    	//Hit Goal
-    	if (col.gameObject.tag == "Goal")
+    	//Hit Goal (if not cheating)
+    	if (col.gameObject.tag == "Goal" && Grabbed == false)
     	{
     		GameLogic.GetComponent<GameLogic>().HitGoal();
     	}
 
-    	//Collect Star
-    	if (col.gameObject.tag == "Star")
+    	//Collect Star if not Grabbed (Prevent Cheating)
+    	if (col.gameObject.tag == "Star" && Grabbed == false)
     	{
             Debug.Log("Hit Star");
     		GameLogic.GetComponent<GameLogic>().CollectStar(col.gameObject);
@@ -117,15 +111,14 @@ public class Ball : MonoBehaviour {
         	ball.GetComponent<Rigidbody>().velocity =  trampoline.GetComponent<Trampoline>().strength * reflect;
         }
 
-        //Prevent carrying outside of startZone
-        if (col.gameObject.CompareTag("StartZone"))
+        //Set ball material 
+        /*if (col.gameObject.CompareTag("StartZone"))
         {
-            Debug.Log("Hit Start Zone");
-            if (Grabbed == true)
-            {
-                Respawn();
-            }
-        }
+            if (GameLogic.GetComponent<GameLogic>().checkStartZone())
+                ball.GetComponent<Renderer>().material = m_Active;
+            else
+                ball.GetComponent<Renderer>().material = m_Inactive;
+        }*/
     }
 
     void OnTriggerExit(Collider col)

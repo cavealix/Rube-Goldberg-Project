@@ -111,7 +111,7 @@ public class LeftInput : MonoBehaviour {
 		if(col.gameObject.CompareTag("Ball"))
 		{
 
-			if( GameLogic.GetComponent<GameLogic>().checkStartZone())
+			//if( GameLogic.GetComponent<GameLogic>().checkStartZone())
 
 				//grab 
 				if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
@@ -137,8 +137,8 @@ public class LeftInput : MonoBehaviour {
 					ball.GetComponent<Ball>().Grabbed = false;
 				}
 			//reset to prevent cheating
-			else
-				ball.GetComponent<Ball>().Respawn();
+			//else
+			//	ball.GetComponent<Ball>().Respawn();
 		}
 
 		//Interact with "Structure" or "Trampoline"

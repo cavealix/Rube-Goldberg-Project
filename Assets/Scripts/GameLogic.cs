@@ -21,7 +21,7 @@ public class GameLogic : MonoBehaviour {
 	//Check if ball in start zone to prevent cheating
 	public bool checkStartZone()
 	{
-		return StartZone.GetComponent<Collider>().bounds.Contains(gameObject.transform.position);
+		return StartZone.GetComponent<Collider>().bounds.Contains(ball.transform.position);
 	}
 
 	//Ball hit a star
