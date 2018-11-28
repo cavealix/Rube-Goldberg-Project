@@ -22,6 +22,9 @@ public class Ball : MonoBehaviour {
 	//GameLogic
 	public GameObject GameLogic;
 
+    //Grabbed indicator to help detect cheating
+    public bool Grabbed = false;
+
 	//Ball Materials
 	public Material m_Active;
 	public Material m_Inactive;
@@ -112,6 +115,16 @@ public class Ball : MonoBehaviour {
         	//reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, col.contacts[0].normal);
         	reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, Vector3.up);
         	ball.GetComponent<Rigidbody>().velocity =  trampoline.GetComponent<Trampoline>().strength * reflect;
+        }
+
+        //Prevent carrying outside of startZone
+        if (col.gameObject.CompareTag("StartZone"))
+        {
+            Debug.Log("Hit Start Zone");
+            if (Grabbed == true)
+            {
+                Respawn();
+            }
         }
     }
 

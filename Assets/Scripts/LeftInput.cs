@@ -12,6 +12,9 @@ public class LeftInput : MonoBehaviour {
     //Interaction Variables
     public float throwForce = 1.5f;
 
+    //Access ball to set 'Grabbed' variable
+    public GameObject ball;
+
     // Teleporter
     private LineRenderer laser; //laser pointer
     public GameObject teleportAimerObject; //where to teleport
@@ -80,8 +83,6 @@ public class LeftInput : MonoBehaviour {
 				player.transform.position = teleportLocation;
 			}
 		//}
-
-	
 	}
 
 	//Hold Objects
@@ -109,22 +110,35 @@ public class LeftInput : MonoBehaviour {
 		//Interact with "Ball"
 		if(col.gameObject.CompareTag("Ball"))
 		{
-			//grab 
-			if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) )
-			{
-				//grab if inside startZone
-				if (GameLogic.GetComponent<GameLogic>().checkStartZone())
-					GrabObject(col);
-				//don't allow player to carry ball outside start zone, reset level
-				else
-					GameLogic.GetComponent<GameLogic>().Reset();
-			}
-			//release if outside startZone
-			else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
-			{
-				col.gameObject.GetComponent<Rigidbody>().useGravity = true;
-				ThrowObject(col);
-			}
+
+			if( GameLogic.GetComponent<GameLogic>().checkStartZone())
+
+				//grab 
+				if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+				{
+					//grab if inside startZone
+					if (GameLogic.GetComponent<GameLogic>().checkStartZone())
+					{
+						GrabObject(col);
+						ball.GetComponent<Ball>().Grabbed = true;
+					}
+					//don't allow player to carry ball outside start zone, reset level
+					/*else
+					{	
+						GameLogic.GetComponent<GameLogic>().Reset();
+						//ball.GetComponent<Ball>().Grabbed = false;
+					}*/
+				}
+				//release if outside startZone
+				else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+				{
+					col.gameObject.GetComponent<Rigidbody>().useGravity = true;
+					ThrowObject(col);
+					ball.GetComponent<Ball>().Grabbed = false;
+				}
+			//reset to prevent cheating
+			else
+				ball.GetComponent<Ball>().Respawn();
 		}
 
 		//Interact with "Structure" or "Trampoline"
