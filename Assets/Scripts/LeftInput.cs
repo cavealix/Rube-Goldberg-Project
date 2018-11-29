@@ -156,6 +156,7 @@ public class LeftInput : MonoBehaviour {
 			}
 		}
 	}
+
 	//Grab objects with Trigger
 	void GrabObject(Collider coli)
 	{
@@ -164,6 +165,7 @@ public class LeftInput : MonoBehaviour {
 		device.TriggerHapticPulse(2000);
 		//Debug.Log("you are touching down on the trigger on an object");
 	}
+
 	//Throw "Throwables" with trigger release
 	void ThrowObject(Collider coli)
 	{
@@ -174,6 +176,7 @@ public class LeftInput : MonoBehaviour {
 		rigidBody.angularVelocity = device.angularVelocity;
 		//Debug.Log("You have released the trigger");
 	}
+	
 	//Release "structures" with trigger release
 	void ReleaseObject(Collider coli)
 	{

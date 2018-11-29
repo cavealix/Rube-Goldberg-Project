@@ -89,7 +89,7 @@ public class Ball : MonoBehaviour {
     	//Collect Star if not Grabbed (Prevent Cheating)
     	if (col.gameObject.tag == "Star" && Grabbed == false)
     	{
-            Debug.Log("Hit Star");
+            //Debug.Log("Hit Star");
     		GameLogic.GetComponent<GameLogic>().CollectStar(col.gameObject);
     	}
 
@@ -103,7 +103,7 @@ public class Ball : MonoBehaviour {
     	//Bounce
         if (col.gameObject.CompareTag("Trampoline"))
         {
-        	Debug.Log ("Bounce!");
+        	//Debug.Log ("Bounce!");
         	trampoline = col.gameObject;
             //col.gameObject.GetComponent<Rigidbody>().AddForce (0, forceApplied, 0);
         	//reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, col.contacts[0].normal);
