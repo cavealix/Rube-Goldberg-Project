@@ -36,7 +36,6 @@ public class LeftInput : MonoBehaviour {
 	// Teleport and Swipe Logic
 	void Update () {
 		device = SteamVR_Controller.Input((int)trackedObject.index);
-		//Debug.Log(trackedObject.index);
 
 		//Teleportation Logic (need to include logic to only allow for left controller)
 		//{
@@ -52,25 +51,24 @@ public class LeftInput : MonoBehaviour {
 				RaycastHit hit;
 				if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
 				{
-				//true on collision within 15
-				teleportLocation = hit.point;
-				laser.SetPosition(1, teleportLocation);
-				//aimer position
-				teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
+					//true on collision within 15
+					teleportLocation = hit.point;
+					laser.SetPosition(1, teleportLocation);
+					//aimer position
+					teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
 				}
 				//on no hit, move forward 15
 				else
 				{
-				teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, transform.forward.y * 15 + transform.position.y, transform.forward.z * 15 + transform.position.z);
-				RaycastHit groundRay;
-				if(Physics.Raycast(teleportLocation, -Vector3.up, out groundRay, 17, laserMask))
-				{
-					teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y, transform.forward.z*15 + transform.position.z);
-
-				}
-				laser.SetPosition(1, transform.forward * 15 + transform.position);
-				//aimer 
-				teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudge, 0);
+					teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, transform.forward.y * 15 + transform.position.y, transform.forward.z * 15 + transform.position.z);
+					RaycastHit groundRay;
+					if(Physics.Raycast(teleportLocation, -Vector3.up, out groundRay, 17, laserMask))
+						{
+							teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y, transform.forward.z*15 + transform.position.z);
+						}
+					laser.SetPosition(1, transform.forward * 15 + transform.position);
+					//aimer 
+					teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudge, 0);
 				}
 			}	
 		
@@ -79,8 +77,12 @@ public class LeftInput : MonoBehaviour {
 			{
 				laser.gameObject.SetActive(false);
 				teleportAimerObject.SetActive(false);
-				//move player
-				player.transform.position = teleportLocation;
+				//move within factory
+				if (GameLogic.GetComponent<GameLogic>().factory.GetComponent<Collider>().bounds.Contains(teleportLocation))
+				{
+					//move player
+					player.transform.position = teleportLocation;
+				}
 			}
 		//}
 	}
