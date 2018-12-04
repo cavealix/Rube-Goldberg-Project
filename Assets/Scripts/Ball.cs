@@ -10,7 +10,6 @@ public class Ball : MonoBehaviour {
 	private Vector3 reflect;
 
 	//Wind and Trampoline variables
-	public float windForce = 1f;
 	public bool inWind = false;
 	private GameObject WindArea;
 	private GameObject trampoline;
@@ -53,7 +52,10 @@ public class Ball : MonoBehaviour {
 		//if collision with floor, respawn at original location
         if(col.gameObject.CompareTag("Ground"))
         {
+            //Respawn Ball
         	Respawn();
+            //Reset Game Logic
+            GameLogic.GetComponent<GameLogic>().Reset();
         }
     }
 

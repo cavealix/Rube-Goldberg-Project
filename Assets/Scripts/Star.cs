@@ -7,7 +7,7 @@ public class Star : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		//GetComponent<AudioSource>().Play();
 	}
 	
 	// Update is called once per frame
@@ -18,7 +18,7 @@ public class Star : MonoBehaviour {
 
 	public void Collect()
 	{
-		//Destroy(gameObject);
+		GetComponent<AudioSource>().Play();
 		gameObject.SetActive(false);
 	}
 
