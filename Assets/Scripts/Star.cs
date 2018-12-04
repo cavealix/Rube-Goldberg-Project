@@ -19,7 +19,6 @@ public class Star : MonoBehaviour {
 	public void Collect()
 	{
 		GetComponent<AudioSource>().Play();
-		
 		gameObject.SetActive(false);
 	}
 

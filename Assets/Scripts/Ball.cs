@@ -28,22 +28,15 @@ public class Ball : MonoBehaviour {
 	public Material m_Active;
 	public Material m_Inactive;
 
-	//Collected Stars
-	//public List<GameObject> stars;
 
 	// Use this for initialization
 	void Start () {
+        //set respawn point
 		respawn = ball.transform.position;
-		//Debug.Log("Ball start position is " + respawn.ToString());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		if (GameLogic.GetComponent<GameLogic>().checkStartZone())
-			ball.GetComponent<Renderer>().material = m_Active;
-		else
-			ball.GetComponent<Renderer>().material = m_Inactive;
 	}
 
 	//Hit Floor, Respawn ball and stars
@@ -67,12 +60,12 @@ public class Ball : MonoBehaviour {
         //set velocity and angular velocity (spin) to 0
         ball.GetComponent<Rigidbody>().velocity = new Vector3 (0, 0, 0);
         ball.GetComponent<Rigidbody>().angularVelocity = new Vector3 (0, 0, 0);
-        //Debug.Log("The ball hit the floor and respawned");
     }
 
-    //Apply Wind Force
+    //Wind
     private void FixedUpdate()
     {
+        //Apply wind force
     	if(inWind)
     	{
 	        ball.GetComponent<Rigidbody>().AddForce(WindArea.transform.up * WindArea.GetComponent<WindArea>().strength);
@@ -82,6 +75,12 @@ public class Ball : MonoBehaviour {
     //Trigger effects of hitting various objects
     void OnTriggerEnter(Collider col)
     {
+        //Set ball material
+        if (col.gameObject.tag == "StartZone")
+        {
+            ball.GetComponent<Renderer>().material = m_Active;
+        }
+
     	//Hit Goal (if not cheating)
     	if (col.gameObject.tag == "Goal" && Grabbed == false)
     	{
@@ -91,7 +90,6 @@ public class Ball : MonoBehaviour {
     	//Collect Star if not Grabbed (Prevent Cheating)
     	if (col.gameObject.tag == "Star" && Grabbed == false)
     	{
-            //Debug.Log("Hit Star");
     		GameLogic.GetComponent<GameLogic>().CollectStar(col.gameObject);
     	}
 
@@ -105,29 +103,25 @@ public class Ball : MonoBehaviour {
     	//Bounce
         if (col.gameObject.CompareTag("Trampoline"))
         {
-        	//Debug.Log ("Bounce!");
         	trampoline = col.gameObject;
-            //col.gameObject.GetComponent<Rigidbody>().AddForce (0, forceApplied, 0);
-        	//reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, col.contacts[0].normal);
         	reflect = Vector3.Reflect(ball.GetComponent<Rigidbody>().velocity, Vector3.up);
         	ball.GetComponent<Rigidbody>().velocity =  trampoline.GetComponent<Trampoline>().strength * reflect;
         }
-
-        //Set ball material 
-        /*if (col.gameObject.CompareTag("StartZone"))
-        {
-            if (GameLogic.GetComponent<GameLogic>().checkStartZone())
-                ball.GetComponent<Renderer>().material = m_Active;
-            else
-                ball.GetComponent<Renderer>().material = m_Inactive;
-        }*/
     }
 
+    //Wind and StartZone
     void OnTriggerExit(Collider col)
     {
+        //Set wind bool
     	if(col.gameObject.tag == "WindArea")
     	{
     		inWind = false;
     	}
+
+        //Set ball material
+        if (col.gameObject.tag == "StartZone")
+        {
+            ball.GetComponent<Renderer>().material = m_Inactive;
+        }
     }
 }
