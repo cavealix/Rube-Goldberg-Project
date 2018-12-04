@@ -6984,7 +6984,11 @@ MeshFilter:
   m_GameObject: {fileID: 1632357099}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Mesh: {fileID: 1384787275}
+=======
+  m_Mesh: {fileID: 451303679}
+>>>>>>> parent of 7cfbbe9... Factory Bounds
 =======
   m_Mesh: {fileID: 451303679}
 >>>>>>> parent of 7cfbbe9... Factory Bounds
@@ -7009,7 +7013,11 @@ MeshRenderer:
   m_Materials:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 1348332047}
+=======
+  - {fileID: 963474837}
+>>>>>>> parent of 7cfbbe9... Factory Bounds
 =======
   - {fileID: 963474837}
 >>>>>>> parent of 7cfbbe9... Factory Bounds

@@ -62,6 +62,9 @@ public class LeftInput : MonoBehaviour {
 				if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
 				{
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 7cfbbe9... Factory Bounds
+=======
 >>>>>>> parent of 7cfbbe9... Factory Bounds
 =======
 >>>>>>> parent of 7cfbbe9... Factory Bounds
@@ -70,6 +73,7 @@ public class LeftInput : MonoBehaviour {
 				laser.SetPosition(1, teleportLocation);
 				//aimer position
 				teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			}
@@ -88,6 +92,8 @@ public class LeftInput : MonoBehaviour {
 			}
 		}	
 =======
+=======
+>>>>>>> parent of 7cfbbe9... Factory Bounds
 =======
 >>>>>>> parent of 7cfbbe9... Factory Bounds
 				}
@@ -121,6 +127,9 @@ public class LeftInput : MonoBehaviour {
 				laser.gameObject.SetActive(false);
 				teleportAimerObject.SetActive(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 7cfbbe9... Factory Bounds
+=======
 >>>>>>> parent of 7cfbbe9... Factory Bounds
 =======
 >>>>>>> parent of 7cfbbe9... Factory Bounds
