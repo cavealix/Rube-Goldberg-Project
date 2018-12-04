@@ -61,12 +61,16 @@ public class LeftInput : MonoBehaviour {
 				RaycastHit hit;
 				if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
 				{
+<<<<<<< HEAD
+>>>>>>> parent of 7cfbbe9... Factory Bounds
+=======
 >>>>>>> parent of 7cfbbe9... Factory Bounds
 				//true on collision within 15
 				teleportLocation = hit.point;
 				laser.SetPosition(1, teleportLocation);
 				//aimer position
 				teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
+<<<<<<< HEAD
 <<<<<<< HEAD
 			}
 			//on no hit, move forward 15
@@ -84,6 +88,8 @@ public class LeftInput : MonoBehaviour {
 			}
 		}	
 =======
+=======
+>>>>>>> parent of 7cfbbe9... Factory Bounds
 				}
 				//on no hit, move forward 15
 				else
@@ -114,6 +120,9 @@ public class LeftInput : MonoBehaviour {
 =======
 				laser.gameObject.SetActive(false);
 				teleportAimerObject.SetActive(false);
+<<<<<<< HEAD
+>>>>>>> parent of 7cfbbe9... Factory Bounds
+=======
 >>>>>>> parent of 7cfbbe9... Factory Bounds
 				//move player
 				player.transform.position = teleportLocation;
