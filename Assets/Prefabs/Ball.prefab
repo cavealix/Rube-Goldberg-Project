@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1168354562766398}
   m_LocalRotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.42, y: 1.32, z: -2.34}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
@@ -113,11 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1168354562766398}
-  windForce: 1
   inWind: 0
-  StartZone: {fileID: 0}
+  StartZone: {fileID: 1257152159601938, guid: bc925c05e41ed6c4887d566a8618f44e, type: 2}
   inStartZone: 0
-  GameLogic: {fileID: 0}
+  GameLogic: {fileID: 1169874524600472, guid: 10f9c976388e3f84eb8bca0130337c08, type: 2}
   Grabbed: 0
   m_Active: {fileID: 2100000, guid: 156347396dbacc342bf96ace9fc0cf83, type: 2}
   m_Inactive: {fileID: 2100000, guid: eedc108c0e1bb694bb31ac3b4902d7fb, type: 2}

@@ -88,57 +88,26 @@ public class LeftInput : MonoBehaviour {
 	//Hold Objects
 	void OnTriggerStay(Collider col)
 	{
-		//Interact with "Throwables"
-		/*if(col.gameObject.CompareTag("Throwable"))
-		{
-			if(device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
-			{
-				//if object is ball, instantiate gravity
-				if(col.gameObject.name == "Ball")
-				{
-					//GameObject ball = col.gameObject;
-					col.gameObject.GetComponent<Rigidbody>().useGravity = true;
-				}
-				ThrowObject(col);
-			}
-			else if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
-			{
-				GrabObject(col);
-			}
-		}*/
-
 		//Interact with "Ball"
 		if(col.gameObject.CompareTag("Ball"))
 		{
-
-			//if( GameLogic.GetComponent<GameLogic>().checkStartZone())
-
-				//grab 
-				if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+			//grab 
+			if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+			{
+				//grab if inside startZone
+				if (GameLogic.GetComponent<GameLogic>().checkStartZone())
 				{
-					//grab if inside startZone
-					if (GameLogic.GetComponent<GameLogic>().checkStartZone())
-					{
-						GrabObject(col);
-						ball.GetComponent<Ball>().Grabbed = true;
-					}
-					//don't allow player to carry ball outside start zone, reset level
-					/*else
-					{	
-						GameLogic.GetComponent<GameLogic>().Reset();
-						//ball.GetComponent<Ball>().Grabbed = false;
-					}*/
+					ball.GetComponent<Ball>().Grabbed = true;
+					GrabObject(col);
 				}
-				//release if outside startZone
-				else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
-				{
-					col.gameObject.GetComponent<Rigidbody>().useGravity = true;
-					ThrowObject(col);
-					ball.GetComponent<Ball>().Grabbed = false;
-				}
-			//reset to prevent cheating
-			//else
-			//	ball.GetComponent<Ball>().Respawn();
+			}
+			//release if outside startZone
+			else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+			{
+				col.gameObject.GetComponent<Rigidbody>().useGravity = true;
+				ball.GetComponent<Ball>().Grabbed = false;
+				ThrowObject(col);
+			}
 		}
 
 		//Interact with "Structure" or "Trampoline"
@@ -163,7 +132,6 @@ public class LeftInput : MonoBehaviour {
 		coli.transform.SetParent(gameObject.transform);
 		coli.GetComponent<Rigidbody>().isKinematic = true;
 		device.TriggerHapticPulse(2000);
-		//Debug.Log("you are touching down on the trigger on an object");
 	}
 
 	//Throw "Throwables" with trigger release
@@ -174,7 +142,6 @@ public class LeftInput : MonoBehaviour {
 		rigidBody.isKinematic = false;
 		rigidBody.velocity = device.velocity * throwForce;
 		rigidBody.angularVelocity = device.angularVelocity;
-		//Debug.Log("You have released the trigger");
 	}
 	
 	//Release "structures" with trigger release
@@ -182,7 +149,7 @@ public class LeftInput : MonoBehaviour {
 	{
 		coli.transform.SetParent(null);
 		Rigidbody rigidBody = coli.GetComponent<Rigidbody>();
-		rigidBody.isKinematic = true;
+		rigidBody.isKinematic = false;
 		rigidBody.velocity = new Vector3(0, 0, 0);
 		rigidBody.angularVelocity = new Vector3(0, 0, 0);
 		//Debug.Log("You have released the trigger");
