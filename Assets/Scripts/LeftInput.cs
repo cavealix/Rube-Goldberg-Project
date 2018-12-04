@@ -39,6 +39,7 @@ public class LeftInput : MonoBehaviour {
 	void Update () 
 	{
 		device = SteamVR_Controller.Input((int)trackedObject.index);
+		//Debug.Log(trackedObject.index);
 
 		//deploy laser on press
 		if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
@@ -46,17 +47,27 @@ public class LeftInput : MonoBehaviour {
 			laser.gameObject.SetActive(true);
 			teleportAimerObject.SetActive(true);
 
+<<<<<<< HEAD
 			//on ray hit
 			laser.SetPosition(0, gameObject.transform.position);
 			//create variable to store ray info
 			RaycastHit hit;
 			if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
 			{
+=======
+				//on ray hit
+				laser.SetPosition(0, gameObject.transform.position);
+				//create variable to store ray info
+				RaycastHit hit;
+				if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
+				{
+>>>>>>> parent of 7cfbbe9... Factory Bounds
 				//true on collision within 15
 				teleportLocation = hit.point;
 				laser.SetPosition(1, teleportLocation);
 				//aimer position
 				teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
+<<<<<<< HEAD
 			}
 			//on no hit, move forward 15
 			else
@@ -72,6 +83,24 @@ public class LeftInput : MonoBehaviour {
 				teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudge, 0);
 			}
 		}	
+=======
+				}
+				//on no hit, move forward 15
+				else
+				{
+				teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, transform.forward.y * 15 + transform.position.y, transform.forward.z * 15 + transform.position.z);
+				RaycastHit groundRay;
+				if(Physics.Raycast(teleportLocation, -Vector3.up, out groundRay, 17, laserMask))
+				{
+					teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y, transform.forward.z*15 + transform.position.z);
+
+				}
+				laser.SetPosition(1, transform.forward * 15 + transform.position);
+				//aimer 
+				teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudge, 0);
+				}
+			}	
+>>>>>>> parent of 7cfbbe9... Factory Bounds
 		
 		//teleport on press up
 		if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
@@ -81,6 +110,11 @@ public class LeftInput : MonoBehaviour {
 			//move within factory and on floor
 			if (GameLogic.GetComponent<GameLogic>().factory.GetComponent<Collider>().bounds.Contains(teleportLocation) && teleportLocation.y < 1)
 			{
+<<<<<<< HEAD
+=======
+				laser.gameObject.SetActive(false);
+				teleportAimerObject.SetActive(false);
+>>>>>>> parent of 7cfbbe9... Factory Bounds
 				//move player
 				player.transform.position = teleportLocation;
 			}
