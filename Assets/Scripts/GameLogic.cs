@@ -35,11 +35,13 @@ public class GameLogic : MonoBehaviour {
 	{
 		//Collect All Stars?
     	if(stars.Count == 3){
+           Debug.Log("You Win!");
            //load next level
            NextLevel();
         }
     	else
     	{
+        	Debug.Log("Try Again");
         	//reset level
         	Reset();
     	}
@@ -50,6 +52,7 @@ public class GameLogic : MonoBehaviour {
 	{
 		//SteamVR_LoadLevel.Begin("Level_1");
         Scene scene = SceneManager.GetActiveScene();
+        Debug.Log("Active scene is '" + scene.name + "'.");
 
         switch(scene.name)
         {
@@ -80,5 +83,10 @@ public class GameLogic : MonoBehaviour {
 
     	//reset ball
     	ball.GetComponent<Ball>().Respawn();
+	}
+
+	public bool isCheating()
+	{
+		return true;
 	}
 }
