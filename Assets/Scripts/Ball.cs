@@ -39,12 +39,20 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		if (GameLogic.GetComponent<GameLogic>().checkStartZone())
+		/*if (GameLogic.GetComponent<GameLogic>().checkStartZone())
 			ball.GetComponent<Renderer>().material = m_Active;
 		else
 			ball.GetComponent<Renderer>().material = m_Inactive;
+        */
 	}
+/*
+    private void OnCollisionEnter () {
+        ball.GetComponent<Renderer>().material = m_Active;
+    }
+    private void OnCollisionExit () {
+        ball.GetComponent<Renderer>().material = m_Inactive;
+    }
+*/
 
 	//Hit Floor, Respawn ball and stars
 	void OnCollisionEnter (Collision col)

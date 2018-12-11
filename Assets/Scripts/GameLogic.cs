@@ -9,6 +9,7 @@ public class GameLogic : MonoBehaviour {
 
 	//Start Zone 
 	public GameObject StartZone;
+    public GameObject Factory;
 
 	// Use this for initialization
 	void Start () {

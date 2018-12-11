@@ -34,12 +34,12 @@ public class ControllerInputManager : MonoBehaviour {
 			if(touch.x > touchTolerance)
 			{
 				objectMenuManager.MenuRight();
-				Debug.Log("MenuRight");
+				//Debug.Log("MenuRight");
 			}
 			if(touch.x < -touchTolerance)
 			{
 				objectMenuManager.MenuLeft();
-				Debug.Log("MenuLeft");
+				//Debug.Log("MenuLeft");
 			}
 		}
 
