@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameLogic : MonoBehaviour {
 	public GameObject ball;
 	public List<GameObject> stars;
+    //public GameObject factory;
 
 	//Start Zone 
 	public GameObject StartZone;
-    public GameObject Factory;
 
 	// Use this for initialization
 	void Start () {

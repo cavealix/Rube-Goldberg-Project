@@ -8,13 +8,13 @@ public class LeftInput : MonoBehaviour {
 
     //GameLogic
 	public GameObject GameLogic;
-	private GameObject Factory;
 
     //Interaction Variables
     public float throwForce = 1.5f;
 
     //Access ball to set 'Grabbed' variable
     public GameObject ball;
+    //private GameObject factory;
 
     // Teleporter
     private LineRenderer laser; //laser pointer
@@ -31,60 +31,61 @@ public class LeftInput : MonoBehaviour {
         trackedObject = GetComponent<SteamVR_TrackedObject>();
         //access LineRenderer despite being private
         laser = GetComponentInChildren<LineRenderer>();
-    	Factory = GameLogic.GetComponent<GameLogic>().Factory;
+        //factory = GameLogic.GetComponent<GameLogic>().factory;
     }
 
 
 	// Teleport and Swipe Logic
 	void Update () {
 		device = SteamVR_Controller.Input((int)trackedObject.index);
+		//Debug.Log(trackedObject.index);
 
-		//deploy laser on press
-		if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
-		{
-			laser.gameObject.SetActive(true);
+		//Teleportation Logic (need to include logic to only allow for left controller)
+		//{
+			//deploy laser on press
+			if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+			{
+				laser.gameObject.SetActive(true);
+				teleportAimerObject.SetActive(true);
 
-			teleportAimerObject.SetActive(true);
-			//on ray hit
-			laser.SetPosition(0, gameObject.transform.position);
-			//create variable to store ray info
-			RaycastHit hit;
-			if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
-			{
-			//true on collision within 15
-			teleportLocation = hit.point;
-			laser.SetPosition(1, teleportLocation);
-			//aimer position
-			teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
-			}
-			//on no hit, move forward 15
-			else
-			{
-			teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, transform.forward.y * 15 + transform.position.y, transform.forward.z * 15 + transform.position.z);
-			RaycastHit groundRay;
-			if(Physics.Raycast(teleportLocation, -Vector3.up, out groundRay, 17, laserMask))
-			{
-				teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y, transform.forward.z*15 + transform.position.z);
-			}
-			laser.SetPosition(1, transform.forward * 15 + transform.position);
-			//aimer 
-			teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudge, 0);
-			}
-		}	
-	
-		//teleport on press up
-		if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
-		{
-			laser.gameObject.SetActive(false);
-			teleportAimerObject.SetActive(false);
+				//on ray hit
+				laser.SetPosition(0, gameObject.transform.position);
+				//create variable to store ray info
+				RaycastHit hit;
+				if(Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
+				{
+				//true on collision within 15
+				teleportLocation = hit.point;
+				laser.SetPosition(1, teleportLocation);
+				//aimer position
+				teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudge, teleportLocation.z);
+				}
+				//on no hit, move forward 15
+				else
+				{
+				teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, transform.forward.y * 15 + transform.position.y, transform.forward.z * 15 + transform.position.z);
+				RaycastHit groundRay;
+				if(Physics.Raycast(teleportLocation, -Vector3.up, out groundRay, 17, laserMask))
+				{
+					teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y, transform.forward.z*15 + transform.position.z);
 
-			//keep player in factory
-			if (Factory.GetComponent<Collider>().bounds.Contains(teleportLocation) && teleportLocation.y < 1 )
+				}
+				laser.SetPosition(1, transform.forward * 15 + transform.position);
+				//aimer 
+				teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudge, 0);
+				}
+			}	
+		
+			//teleport on press up
+			if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
 			{
+				laser.gameObject.SetActive(false);
+				teleportAimerObject.SetActive(false);
 				//move player
+				//if(factory.GetComponent<Collider>().bounds.Contains(teleportLocation) && teleportLocation.y < 1);
 				player.transform.position = teleportLocation;
 			}
-		}
+		//}
 	}
 
 	//Hold Objects
@@ -97,12 +98,11 @@ public class LeftInput : MonoBehaviour {
 			if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
 			{
 				//grab if inside startZone
-				//if (GameLogic.GetComponent<GameLogic>().checkStartZone())
-				//{
-					
+				if (GameLogic.GetComponent<GameLogic>().checkStartZone())
+				{
 					ball.GetComponent<Ball>().Grabbed = true;
 					GrabObject(col);
-				//}
+				}
 			}
 			//release if outside startZone
 			else if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
